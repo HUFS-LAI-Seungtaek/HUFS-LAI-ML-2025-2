@@ -17,14 +17,14 @@
 - **Test set:** 10000개
 
 ## 패키지 버전 확인
-python: 3.12.11
-torch: 2.8.0+cu126
-torchvision: 0.23.0+cu126
-datasets: 4.0.0
-numpy: 2.0.2
-pandas: 2.2.2
-matplotlib: 3.10.0
-seaborn: 0.13.2
+- python: 3.12.11
+- torch: 2.8.0+cu126
+- torchvision: 0.23.0+cu126
+- datasets: 4.0.0
+- numpy: 2.0.2
+- pandas: 2.2.2
+- matplotlib: 3.10.0
+- seaborn: 0.13.2
 --------------------
 
 ## 실험 결과
