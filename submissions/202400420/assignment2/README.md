@@ -61,7 +61,7 @@ epoch=3, dropout 코드 없음, validation set 세팅 안 함
 
 - 결과 2(최고 validation accuracy가 나타난 epoch에서의 test accuracy): 분할 비율 1/24에서 97.48%(epoch 7), 1/12에서 97.38%(epoch 5), 1/6에서 97.21%(epoch 6)
 
-- 분석 1: **test data의 양이 많을 수록 test accuracy가 높고**, 이것은 test data의 양과 모델의 성능이 비례한다는 것을 알 수 있음. 
+- 분석 1: **train data의 양이 많을 수록 test accuracy가 높고**, 이것은 train data의 양과 모델의 성능이 비례한다는 것을 알 수 있음. 
 
 - 분석 2: train data, test data 두 가지 데이터만 갖고 모델의 최고 성능 epoch 지점을 찾고 early stopping을 진행하는 것 보다는 validation data를 도입해서 성능을 측정해야함. 최적의 epoch이 data양과 정비례하는 것이 아니기 때문.
 
