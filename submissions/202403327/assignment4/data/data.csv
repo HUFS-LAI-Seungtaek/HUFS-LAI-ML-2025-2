@@ -1,0 +1,201 @@
+sentence,target_word,label
+"Please write your home address on the form.",address,0
+"I lost the address of the restaurant.",address,0
+"Do you have a valid email address?",address,0
+"The return address is missing.",address,0
+"He gave me his business address.",address,0
+"What is your current mailing address?",address,0
+"Please confirm your shipping address.",address,0
+"I need the IP address of the server.",address,0
+"She couldn't find the address.",address,0
+"Is this the right address?",address,0
+"The letter was sent to the wrong address.",address,0
+"Please update your address in our system.",address,0
+"Do not share your personal address online.",address,0
+"He scribbled the address on a napkin.",address,0
+"The address on the package was illegible.",address,0
+"We need proof of address for the application.",address,0
+"Change of address forms are available.",address,0
+"The Gettysburg Address is famous.",address,0
+"I forgot to note down the address.",address,0
+"The GPS could not locate the address.",address,0
+"We must address this problem immediately.",address,1
+"The CEO will address the staff tomorrow.",address,1
+"How should we address these concerns?",address,1
+"The policy fails to address the root cause.",address,1
+"He addressed the audience confidently.",address,1
+"Please address your questions to the speaker.",address,1
+"We need to address the issue of climate change.",address,1
+"The article addresses the topic of health.",address,1
+"She addressed the letter to the manager.",address,1
+"It is time to address our failures.",address,1
+"The government promised to address the crisis.",address,1
+"Let's address the elephant in the room.",address,1
+"He didn't address me by name.",address,1
+"The meeting addressed several key topics.",address,1
+"We are working to address the complaints.",address,1
+"You need to address the error in the code.",address,1
+"The report addresses future trends.",address,1
+"Please address the envelope clearly.",address,1
+"They failed to address the safety hazards.",address,1
+"I will address that point later.",address,1
+"I deposited cash into my savings account.",account,0
+"Do you have a checking account?",account,0
+"I forgot my account password.",account,0
+"The money was transferred to your account.",account,0
+"He opened a new bank account.",account,0
+"My account balance is low.",account,0
+"Please log in to your account.",account,0
+"She manages the company's advertising account.",account,0
+"Keep the receipt for your account records.",account,0
+"I need to verify my account details.",account,0
+"The funds were withdrawn from the account.",account,0
+"Create an account to continue.",account,0
+"His account was frozen by the bank.",account,0
+"Charge this to my expense account.",account,0
+"The detailed account of the event was shocking.",account,0
+"He gave a truthful account of the accident.",account,0
+"Delete my user account please.",account,0
+"The client account is very important.",account,0
+"Check your email account for the link.",account,0
+"This is a joint account.",account,0
+"How do you account for the missing money?",account,1
+"He could not account for his absence.",account,1
+"Can you account for the difference in numbers?",account,1
+"Bad weather accounts for the delay.",account,1
+"Students account for half of the customers.",account,1
+"You must account for every penny spent.",account,1
+"This factor accounts for the sudden rise.",account,1
+"I cannot account for his behavior.",account,1
+"Electronic sales account for 30% of revenue.",account,1
+"We must account for all possibilities.",account,1
+"How do you account for this discrepancy?",account,1
+"Stress accounts for many health problems.",account,1
+"She tried to account for her mistake.",account,1
+"High humidity accounts for the mold.",account,1
+"These items account for the bulk of the cost.",account,1
+"We need to account for inflation.",account,1
+"His explanation doesn't account for the facts.",account,1
+"Can you account for your whereabouts last night?",account,1
+"Oil exports account for the country's wealth.",account,1
+"Please account for all inventory items.",account,1
+"I bought a birthday present for her.",present,0
+"He received a lovely present.",present,0
+"Don't worry about the past, live in the present.",present,0
+"The present is a gift.",present,0
+"She wrapped the present carefully.",present,0
+"There is no time like the present.",present,0
+"It was a generous retirement present.",present,0
+"Open your present!",present,0
+"At present, we have no vacancies.",present,0
+"For the present, we are safe.",present,0
+"The christmas presents are under the tree.",present,0
+"Thank you for the wonderful present.",present,0
+"He focused on the present situation.",present,0
+"The present for the wedding was expensive.",present,0
+"I sent a small present to thank him.",present,0
+"She ignored the present difficulties.",present,0
+"This is a present from my parents.",present,0
+"He bought himself a present.",present,0
+"The present moment is all we have.",present,0
+"Exchange this present for something else.",present,0
+"He will present the findings next week.",present,1
+"Please present your ID at the desk.",present,1
+"May I present Dr. Smith?",present,1
+"The company presented a new strategy.",present,1
+"You must present a valid ticket.",present,1
+"She presented her arguments clearly.",present,1
+"The case presents a difficult challenge.",present,1
+"He presented himself as an expert.",present,1
+"They presented the winner with a trophy.",present,1
+"The opportunity presented itself unexpectedly.",present,1
+"Allow me to present my team.",present,1
+"The movie presents a grim view of the future.",present,1
+"Please present your passport.",present,1
+"The data presents a positive trend.",present,1
+"He presented a solution to the board.",present,1
+"The illness presents with a fever.",present,1
+"She presented a calm exterior.",present,1
+"They presented a petition to the mayor.",present,1
+"This presents a unique opportunity.",present,1
+"He was asked to present the award.",present,1
+"Please sign the contract immediately.",contract,0
+"We reviewed the terms of the contract.",contract,0
+"The contract expires next month.",contract,0
+"He breached the contract.",contract,0
+"It is a legally binding contract.",contract,0
+"They won a government contract.",contract,0
+"Read the fine print in the contract.",contract,0
+"The contract stipulates a penalty.",contract,0
+"She drafted the employment contract.",contract,0
+"The union negotiated a new contract.",contract,0
+"Attach a copy of the contract.",contract,0
+"The contract is valid for one year.",contract,0
+"He is under contract with the studio.",contract,0
+"Void the contract.",contract,0
+"The contract renewal is pending.",contract,0
+"Send the signed contract back.",contract,0
+"This violates the lease contract.",contract,0
+"We need to finalize the contract.",contract,0
+"The marriage contract was signed.",contract,0
+"A verbal contract is hard to prove.",contract,0
+"He contracted a rare disease in the jungle.",contract,1
+"Metal contracts as it cools.",contract,1
+"She contracted the flu.",contract,1
+"The economy contracted by 2% last year.",contract,1
+"His pupils contracted in the light.",contract,1
+"He contracted malaria while traveling.",contract,1
+"The heart muscle contracts to pump blood.",contract,1
+"The market for these goods is contracting.",contract,1
+"She contracted a serious virus.",contract,1
+"The stomach contracts during digestion.",contract,1
+"Many people contracted the infection.",contract,1
+"The material expands and contracts.",contract,1
+"He contracted pneumonia.",contract,1
+"Spending contracted due to the recession.",contract,1
+"The universe is not contracting.",contract,1
+"He contracted a bad cold.",contract,1
+"Her brow contracted in a frown.",contract,1
+"The industry contracted significantly.",contract,1
+"Don't contract the virus.",contract,1
+"Rubber contracts when heated.",contract,1
+"I appreciate your help very much.",appreciate,0
+"We appreciate your business.",appreciate,0
+"I really appreciate what you did.",appreciate,0
+"He didn't appreciate the favor.",appreciate,0
+"I would appreciate a quick reply.",appreciate,0
+"We appreciate your cooperation.",appreciate,0
+"I appreciate your concern.",appreciate,0
+"She appreciates your kindness.",appreciate,0
+"I appreciate you listening to me.",appreciate,0
+"We appreciate your feedback.",appreciate,0
+"I appreciate the opportunity.",appreciate,0
+"They appreciate your hard work.",appreciate,0
+"I appreciate your honesty.",appreciate,0
+"We appreciate your patience.",appreciate,0
+"I appreciate the gesture.",appreciate,0
+"I appreciate your coming here.",appreciate,0
+"We appreciate your donation.",appreciate,0
+"I appreciate your understanding.",appreciate,0
+"He appreciates good manners.",appreciate,0
+"I truly appreciate it.",appreciate,0
+"The house appreciated in value.",appreciate,1
+"I don't think you appreciate the risks.",appreciate,1
+"The currency appreciated against the dollar.",appreciate,1
+"He fails to appreciate the complexity.",appreciate,1
+"Her talent was not fully appreciated.",appreciate,1
+"Art tends to appreciate over time.",appreciate,1
+"Do you appreciate the gravity of the situation?",appreciate,1
+"The land appreciated significantly.",appreciate,1
+"He appreciates fine wine.",appreciate,1
+"She appreciates classical music.",appreciate,1
+"Investments that appreciate are good.",appreciate,1
+"You need to appreciate the nuance.",appreciate,1
+"They appreciate the importance of education.",appreciate,1
+"The antique furniture appreciated.",appreciate,1
+"I can appreciate why you are angry.",appreciate,1
+"He appreciates the beauty of nature.",appreciate,1
+"Gold usually appreciates during crises.",appreciate,1
+"We must appreciate the cultural differences.",appreciate,1
+"Few people appreciate his genius.",appreciate,1
+"The stock appreciated rapidly.",appreciate,1
