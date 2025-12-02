@@ -1,0 +1,40 @@
+# 스페인어 동사 분류기
+## 모델 아키텍처
+- 스페인어 동사의 변화된 형태를 입력으로 받아, 해당 동사의 mood, tense, person을 동시에 예측하는 Multi-Head LSTM 모델을 설계하였다.
+- Input
+  - 입력된 변형된 형태의 동사를 문자 단위로 토큰화 한다.
+  - 이후 각 문자는 64차원의 임베딩 벡터로 매핑된다.
+- Bidirectional LSTM Encoder
+  - 문자 시퀀스를 인코딩 하기 위해 3개 층의 양방향 LSTM을 사용한다. (hidden_dim = 256)
+  - 최종적으로 forward와 backward hidden state를 결합하여 512차원의 문맥 벡터를 만든다.
+- Multi-Head Classification
+  - 위의 512차원의 문맥 벡터는 각각 mood, tense, person 분류를 위한 세 개의 독립된 feed-forward head로 전달된다.
+- Loss Function
+  - 3개의 head의 cross entropy loss를 단순 합하여 total loss를 구성한다.
+- Optimization & Regularization
+  - Optimizer : Adam (lr = 1e-3)
+  - Dropout 0.5 적용
+  - Early stopping (patience = 10, validation loss 기준)
+## 평가 지표 및 성능 결과
+- 평가 지표
+  - Exact Accuracy : mood, tense, person 세 가지 특징을 모두 정확하게 예측한 비율
+  - Individual Head Accuracy
+  - Individual Head Macro-F1
+- 성능 결과
+  - Exact Accuracy : 0.8715
+  - Individual Head Accuracy
+    - mood : 0.9690
+    - tense : 0.9895
+    - person : 0.8980
+  - Individual Head Macro-F1
+    - mood : 0.9199
+    - tense : 0.9883
+    - person : 0.8945
+- 모델 가중치 저장 위치
+  - /content/drive/MyDrive/spanish-verb-project/best_model.pt
+  - (https://drive.google.com/drive/folders/14dNRaq8jChEXL-dlD9mS-vvfUAnq6zsF?usp=drive_link)
+- 발견한 문제
+  - 성능 결과를 보면 mood에서의 imperative, person에서의 1sg,3sg의 정확도가 떨어지는 것을 확인할 수 있다.
+  - 스페인어 동사는 한 동사가 가지는 변화 형태가 너무 다양해 같은 형태라도 다른 mood, tense, person의 라벨을 가지는 동사들이 많다. 문맥의 고려 없이 단어의 형태로만 head를 예측하는 모델은 이러한 같은 형태의 다른 동사를 구분할 수 없다.
+  - imperative시제는 데이터가 다른 시제들에 비해 비교적 적고 imperative시제의 동사들이 주로 indicative, subjunctive에서 파생되는 형태를 가져 모델이 이를 잘 학습하지 못한 것으로 예상된다.
+  - 또한 가장 빈번히 겹치는 형태가 1sg와 3sg의 형태이다. 따라서 이 두 라벨 역시 정확도가 낮게 나온 것으로 보인다.
