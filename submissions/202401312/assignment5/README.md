@@ -60,5 +60,5 @@
 - evaluation 결과를 히트맵으로 시각화하여 분석한 결과, GAP과 CONTACT 간의 오분류가 가장 빈번하게 발생했습니다. POWER 유형은 HR_Ratio가 강력한 변별력을 제공하는 반면, CONTACT와 GAP 유형을 가르는 지표들은 상대적으로 변별력이 낮아 모델이 완벽한 분류 성능을 달성하는 데 한계가 있었다고 생각합니다.
 
 ## 6. 모델 가중치 저장 위치
-- Hugging Face에 모델 가중치인 best_batter_classifier.pth와 스케일러인 scaler.pkl 업로드했습니다.
+- Hugging Face에 모델 가중치인 best_batter_classifier.pth와 스케일러인 scaler.pkl을 업로드했습니다.
 - 링크: https://huggingface.co/ohsj611/batter_classifier/tree/main
