@@ -9,7 +9,7 @@
 - 모델 재현성: 최종 모델 가중치는 Hugging Face의 공개 저장소인 *jsjang0104/book-genre-classifier-bert*에 로드하였습니다.
 - 실제 프로젝트 방식 vs. 채점 편의:
     - 실제 프로젝트 방식: 
-        - inference data 접근 및 result 저장을 위하여 전체 리포지토리를 복제(clone)하는 과정이 cell에 구현되어있습니다.
+        - inference data 접근 및 result 저장을 위하여 전체 리포지토리를 clone하는 과정이 cell에 구현되어있습니다.
         - colab 환경에서 진행하여서 Hugging Face 로그인 과정 cell도 구현하였습니다.
     - **💡채점 편의💡**: 
         - 추론 데이터 샘플을 코드 내부에 하드코딩하는 셀을 별도로 추가하여, repository 복제 없이도 즉시 추론 결과를 확인할 수 있도록 구성하였습니다.
