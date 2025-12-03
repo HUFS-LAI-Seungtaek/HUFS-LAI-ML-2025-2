@@ -100,7 +100,7 @@ submissions/202400420/assignment5/
   
 
 **Confusion Matrix**
-![Test Set Confusion Matrix](datas/normalized_confusion_matrix.png)
+![Test Set Confusion Matrix](https://raw.githubusercontent.com/HUFS-LAI-Seungtaek/HUFS-LAI-ML-2025-2/1beb7431311e803f1acdc508953bd96746cb31d4/submissions/202400420/assignment5/datas/normalized_confusion_matrix.png)
 - 대각선 값 = **Recall**
 - 대각선이 아닌 값 = 오분류 비율 (Prediced Label / Actual Label)
 - 해석
