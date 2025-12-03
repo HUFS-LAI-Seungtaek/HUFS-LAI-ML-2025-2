@@ -210,3 +210,7 @@
 - https://bsmg.wiki/mapping/map-format.html (비트세이버 비공식 위키)
 - https://beatsaver.com/ (비트세이버의 커스텀 레벨 공유 사이트)
 - pandas와 seaborn을 이용한 데이터 분석에서 각 상황에서의 함수 사용법 등에 Google AI 검색과 Gemini를 사용하였습니다.
+
+## 5. 추출된 데이터 (구글 드라이브)
+- 데이터 추출 결과, 파일의 크기가 130MB로 계산되어 구글 드라이브에 업로드 후 링크를 개시합니다.
+- 링크: https://drive.google.com/file/d/1vP5ARv1VLuegI5QaEaVbD5vLfkH1MMTY/view?usp=sharing
