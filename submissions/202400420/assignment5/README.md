@@ -100,7 +100,7 @@ submissions/202400420/assignment5/
   
 
 **Confusion Matrix**
-![Test Set Confusion Matrix](./datas/normalized_confusion_matrix.png)
+![Test Set Confusion Matrix](datas/normalized_confusion_matrix.png)
 - 대각선 값 = **Recall**
 - 대각선이 아닌 값 = 오분류 비율 (Prediced Label / Actual Label)
 - 해석
