@@ -93,12 +93,11 @@ submissions/202400420/assignment5/
 
 
 **클래스별 F1-Score**
-- 수치
-    - 역사 (Geschichte): 0.6868
-    - 문학 (Literatur): 0.7348
-    - 사회과학 (Sozialwissenschaften): 0.7800
-    - 어학 (Sprachwissenschaft): 0.7032
-- 해석
+- 역사 (Geschichte): 0.6868
+- 문학 (Literatur): 0.7348
+- 사회과학 (Sozialwissenschaften): 0.7800
+- 어학 (Sprachwissenschaft): 0.7032
+  
 
 **Confusion Matrix**
 ![Test Set Confusion Matrix](./datas/normalized_confusion_matrix.png)
