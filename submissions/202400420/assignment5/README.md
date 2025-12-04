@@ -52,7 +52,28 @@ submissions/202400420/assignment5/
 
 
 ## 3. 평가 지표 및 성능 결과:
-### 1. evaluation.ipynb 기반 성능 분석
+
+### 1. training.ipynb 학습 경과 분석
+<img width="1189" height="490" alt="loss, accuracy" src="https://github.com/user-attachments/assets/2e734d19-b9e1-4aed-8475-e122d8c3665f" />
+1. Loss
+    - Train Loss
+          - 3 Epoch 동안 0.8993 -> 0.7356 -> 0.6499로 꾸준히 감소함
+          - 모델이 training data의 패턴을 안정적으로 학습하였음을 시사
+    - Validation Loss
+          - 3 Epoch 동안 0.8457 -> 0.8676 -> 0.8276으로 2 Epoch에서 상승하며 과적합 위험을 보였으나 Epoch 3에서 다시 하락하여 수렴함
+          - 상승 정도가 크지 않은 점으로 미루어보아 일시적으로 불안정성을 띄웠으나 최종적으로는 일반화 성능을 확보한 것으로 보임
+
+2. Accuracy
+    - Train Accuracy
+          - 3 Epoch 동안 0.6417 -> 0.7259 -> 0.7655 로 꾸준히 증가함
+    - Validation Accuracy
+         - 3 Epoch 동안 0.6937 -> 0.6751 -> 0.7199로, Loss와 마찬가지로 Epoch 2에서 일시적인 불안정성을 보였으나, Epoch 3에서 다시 반등하며 최고 성능을 기록함
+
+3. Epoch 선정 근거
+    - 참고 문헌 권장값 준수: BERT의 원논문(Devlin et al., 2018) 및 일반적인 NLP 파인튜닝 가이드라인에 따라, 권장 Epoch 수인 3~4회를 기준으로 초기 학습 시작
+    - 3 Epoch 시행에서 Validation Loss가 수렴하고 Accuracy가 적정 수준에 도달한 점, colab 환경의 제한된 컴퓨팅 리소스 등을 고려하여 효율적인 학습을 진행하고자 추가 학습 없이 training epoch 3에서 학습 종료
+
+### 2. evaluation.ipynb 기반 성능 분석
 
 **평가 지표 정의**
 1. Accuracy (정확도)
@@ -114,7 +135,7 @@ submissions/202400420/assignment5/
     - 주요 오분류: 전체 역사 class의 21%가 문학으로 오분류 됨
         - 인문학 계열 내에서 고전, 신화, 특정 시대 연구 등 주제가 겹치면서 발생하는 혼동으로 추정
 
-### 2. inference.ipynb에서의 결과 기반 성능 분석
+### 3. inference.ipynb에서의 결과 기반 성능 분석
 - inference 과정은 실제 오스트리아 도서관의 도서 데이터 제목을 사용하여 모델의 실용성을 확인함
 - evaluation 과정에서는 confidence가 70% 이하일 때만 클래스별 confidence를 출력했지만, 실제 사용에 있어서는 출력된 confidence 목록을 보고 **사람이 직접 선택**할 수 있게끔 모든 data에 적용함
 - sample data: inference_data.csv
