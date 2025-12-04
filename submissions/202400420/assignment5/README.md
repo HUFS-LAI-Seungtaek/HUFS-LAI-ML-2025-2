@@ -1,0 +1,180 @@
+# Assignment5. Model Training and Evaluation
+
+## 0. Intro
+### 프로젝트 진행 환경
+- 로컬 환경의 하드웨어 한계로 인해, 모든 모델 실험 및 학습은 colab에서 진행되었습니다.
+- Colab에서 실험이 완료된 후, 결과 파일(inference result, 최종 ipynb파일 등)만 로컬 환경으로 다운로드한 뒤 git에 push하는 방식으로 관리했습니다.
+
+### 재현성 및 inference.ipynb 구성
+- 모델 재현성: 최종 모델 가중치는 Hugging Face의 공개 저장소인 *jsjang0104/book-genre-classifier-bert*에 로드하였습니다.
+- 실제 프로젝트 방식 vs. 채점 편의:
+    - 실제 프로젝트 방식: 
+        - inference data 접근 및 result 저장을 위하여 전체 리포지토리를 clone하는 과정이 cell에 구현되어있습니다.
+        - colab 환경에서 진행하여서 Hugging Face 로그인 과정 cell도 구현하였습니다.
+    - **💡채점 편의💡**: 
+        - 추론 데이터 샘플을 코드 내부에 하드코딩하는 셀을 별도로 추가하여, repository 복제 없이도 즉시 추론 결과를 확인할 수 있도록 구성하였습니다.
+        - 로컬 환경을 고려하여 Hugging Face 로그인 과정 cell이 별도로 분리되어 있습니다
+- 코드 생성 및 결과 해석에 있어 Gemini의 도움을 받았습니다.
+
+### 파일 구조 설명
+submissions/202400420/assignment5/  
+├── datas/  
+|   ├── eval_data.csv                   # evaluation dataset (assignment4 수집 데이터 분할)  
+|   ├── inference_data.csv              # inference dataset (실제 오스트리아 도서관 도서)  
+|   ├── inference_result.csv            # inference 결과 (inference.ipynb 코드에서 저장)   
+|   ├── nomalized_confusion_matrix.png  # confusion matrix 이미지   
+|   ├── test_data.csv                   # test dataset (assignment4 수집 데이터 분할)  
+|   └── train_data.csv                  # train dataset (assignment4 수집 데이터 분할)  
+├── evaluation.ipynb                    # 모델 평가 코드  
+├── inference.ipynb                     # 모델 추론 코드 (예시값 포함)  
+├── README.md                           # 프로젝트 요약 및 결과  
+└── training.ipynb                      # 모델 학습 코드  
+
+## 1. 모델 아키텍처
+- 기반 모델: mBERT 
+    - mBERT는 104개 언어로 pre-training된 모델로, 프로젝트에서 다루고 있는 다국어(독일어, 영어, 한국어, 라틴어 등) 도서 데이터를 처리하는 데 적합함.
+- 파인튜닝 방식: Task-specific Fine-tuning
+    - Hugging Face의 AutoModelForSequenceClassification을 사용하여 mBERT의 pre-trained weights를 보존
+    - 프로젝트가 지향하는 작업인 Classification에 맞게 마지막 Classification Head만 데이터에 맞게 fine-tuning 진행
+- Classifier Layer 구조: Pooling Layer (token vector 추출 / 768 features) -> Dropout (overfitting 방지 / 768 features) -> Linear Layer (최종 4개 class로 매핑) 
+
+## 2. 데이터셋 및 전처리
+- 데이터 분할 비율 (각 데이터 set별 class 분포 유사도 확인 완료(training.ipynb 코드에 명시))
+    - train set: 80% (model training)
+    - validation set: 10% (training 중 성능 점검 및 early stopping 판단)
+    - test set: 10% (최종 성능 평가)
+- 클래스 불균형 처리
+    - 기존 데이터의 클래스 분포가 불균형했음 (역사 33.24%, 문학31.51%, 사회과학26.95%, **어학8.29%**)
+    - 보완을 위해 학습 시 Minority Class인 어학의 중요도를 높여 Weighted Loss Function 적용 (특정 class bias 방지)
+    - 방식: 각 클래스의 빈도수에 반비례하는 가중치($W_i$)를 계산하여 CrossEntropyLoss(PyTorch) 함수에 적용
+    - 가중치 공식: $W_i = 1 / (\text{빈도수}_i)$ (정규화 후 사용)
+
+
+
+## 3. 평가 지표 및 성능 결과:
+
+### 1. training.ipynb 학습 경과 분석
+![Loss Accuracy_Curve](submissions/202400420/assignment5/datas/loss_accuracy.png)
+
+1. Loss
+- Train Loss
+    - 3 Epoch 동안 0.8993 -> 0.7356 -> 0.6499로 꾸준히 감소함
+    - 모델이 training data의 패턴을 안정적으로 학습하였음을 시사
+- Validation Loss
+    - 3 Epoch 동안 0.8457 -> 0.8676 -> 0.8276으로 2 Epoch에서 상승하며 과적합 위험을 보였으나 Epoch 3에서 다시 하락하여 수렴함
+    - 상승 정도가 크지 않은 점으로 미루어보아 일시적으로 불안정성을 띄웠으나 최종적으로는 일반화 성능을 확보한 것으로 보임
+
+2. Accuracy
+- Train Accuracy
+    - 3 Epoch 동안 0.6417 -> 0.7259 -> 0.7655 로 꾸준히 증가함
+- Validation Accuracy
+    - 3 Epoch 동안 0.6937 -> 0.6751 -> 0.7199로, Loss와 마찬가지로 Epoch 2에서 일시적인 불안정성을 보였으나, Epoch 3에서 다시 반등하며 최고 성능을 기록함
+
+3. Epoch 선정 근거
+- 참고 문헌 권장값 준수: BERT의 원논문(Devlin et al., 2018) 및 일반적인 NLP 파인튜닝 가이드라인에 따라, 권장 Epoch 수인 3~4회를 기준으로 초기 학습 시작
+- 3 Epoch 시행에서 Validation Loss가 수렴하고 Accuracy가 적정 수준에 도달한 점, colab 환경의 제한된 컴퓨팅 리소스 등을 고려하여 효율적인 학습을 진행하고자 추가 학습 없이 training epoch 3에서 학습 종료
+
+### 2. evaluation.ipynb 기반 성능 분석
+
+**평가 지표 정의**
+1. Accuracy (정확도)
+  - 전체 예측 중 정확하게 분류된 비율
+  - $(TP+TN) / (TP+TN+FP+FN)$
+  - 모델의 전반적인 성능을 나타냄
+
+2. Weighted Precision (정밀도)
+  - 모델이 Positive라고 예측한 것 중 실제 Positive인 비율
+  - $TP / (TP+FP)$
+  - FP를 줄이는 것이 중요할 때
+  - '어학'에서 클래스 불균형이 관찰되어 가중 평균 사용
+
+3. Weighted Recall (재현율)
+  - 실제 Positive인 것 중 모델이 Positive로 정확하게 예측한 비율
+  - $TP / (TP+FN)$
+  - False Negative (놓치는 것)를 줄이는 것이 중요할 때
+  - '어학'에서 클래스 불균형이 관찰되어 가중 평균 사용
+
+4. Weighted F1-score
+  - Precision과 Recall의 조화 평균.
+  - $2 \cdot (Precision \cdot Recall) / (Precision + Recall)$
+  - Precision과 Recall의 균형을 나타내는 단일 지표
+  - '어학'에서 클래스 불균형이 관찰되어 가중 평균 사용
+
+5. Macro F1-score
+  - 각 클래스별 F1-Score를 계산 후, 클래스 크기에 상관없이 단순 평균
+  - 샘플 수가 적은 Minority Class(어학)의 성능이 모델의 최종 지표에 미치는 영향을 확대
+
+**최종 성능 표**  
+| Metric | Average Type | Score |
+| :--- | :--- | :--- |
+| Accuracy | Overall | 0.7291 |
+| F1-Score | Weighted | 0.7284 |
+| F1-Score | Macro | 0.7262 |
+| Precision | Weighted | 0.7314 |
+| Recall | Weighted | 0.7291 |
+
+
+**클래스별 F1-Score**
+- 역사 (Geschichte): 0.6868
+- 문학 (Literatur): 0.7348
+- 사회과학 (Sozialwissenschaften): 0.7800
+- 어학 (Sprachwissenschaft): 0.7032
+  
+
+**Confusion Matrix**
+<img width="778" height="680" alt="normalized_confusion_matrix" src="https://github.com/user-attachments/assets/65454548-bcc9-4318-a9b3-f5a81a090469" />
+
+- 대각선 값 = **Recall**
+- 대각선이 아닌 값 = 오분류 비율 (Prediced Label / Actual Label)
+- 해석
+    - 사회과학 (Sozialwissenschaften) 강세: 사회과학 클래스는 주제의 경계가 명확하여 가장 높은 성능(0.77)을 보임.
+        - 문학, 어학, 역사의 인문학 계열에서는 제목에서 모호함이 다소 존재하나 
+        - 사회과학 계열에서는 제목에 사용되는 키워드(경제, 정책, 법 등)가 명확하여 성능이 좋게 나타난 것으로 추정
+    - 어학 (Sprachwissenschaft) 약세: 어학 클래스는 Recall이 0.65로 가장 낮음. 
+        - 특히 문학(Literatur, 0.19)이나 역사(Geschichte, 0.11)로 오분류되는 경향이 큼
+        - 가중치 적용에도 불구, 데이터 양의 한계로 추정
+    - 주요 오분류: 전체 역사 class의 21%가 문학으로 오분류 됨
+        - 인문학 계열 내에서 고전, 신화, 특정 시대 연구 등 주제가 겹치면서 발생하는 혼동으로 추정
+
+### 3. inference.ipynb에서의 결과 기반 성능 분석
+- inference 과정은 실제 오스트리아 도서관의 도서 데이터 제목을 사용하여 모델의 실용성을 확인함
+- evaluation 과정에서는 confidence가 70% 이하일 때만 클래스별 confidence를 출력했지만, 실제 사용에 있어서는 출력된 confidence 목록을 보고 **사람이 직접 선택**할 수 있게끔 모든 data에 적용함
+- sample data: inference_data.csv
+    - 어학, 문학, 사회과학, 역사 각 class 별로 5권
+    - 독일어 12권, 영어 2권, 한국어 5권, 라틴어 1권
+- 각 클래스 별 Accuracy:
+    - 어학 (4/5)
+    - 문학 (5/5)
+    - 사회과학 (5/5)
+    - 역사 (1/5)
+- 오분류 케이스:
+    - ABC der schwachen Verben (어학을 문학으로 분류 / confidence 0.8378)
+        - 문법 교재임에도 'ABC'나 'Verben'이라는 단어가 학습 과정에서 문학 학습 자료와 겹쳐 해석되어 발생한 것으로 추정
+    - Lexikon der antiken Mythen und Gestalten (역사를 문학으로 분류 / confidence 0.3900)
+        - 고대 신화 관련 제목이 문학/역사/사회과학 경계에 걸쳐 있어 모델이 가장 낮은 confidence(0.39)로 예측하며 실패
+    - BIBLIOTHEK DER GESCHICHTE UND POLITIK DIE FRAN... (역사를 문학으로 분류 / confidence 0.5551)
+        - 'GESCHICHTE(역사)'가 명시되어 있음에도 문학으로 오분류. 
+        - 'BIBLIOTHEK (총서)'가 '문학 총서'의 제목 패턴과 유사하게 인식되었거나, '정치'라는 키워드가 사회과학 계열과 인접하게 해석되면서 모델이 모호함(0.5551)에 빠진 것으로 추정
+    - 서양미술사 (역사를 문학으로 분류 / confidence 0.7993)
+        - '미술사'는 역사 키워드이나, '미술'이라는 주제가 인문학 내에서 문학과 인접한 예술 영역으로 분류되는 경향이 있어 모델이 두 클래스 간의 경계를 혼동한 것으로 추정
+    - 한국외국어대학교 60년사 I. 시대별 외대사 (역사를 어학으로 분류 / confidence 0.9820)
+        - '70년사'는 역사 키워드이나, 모델이 '외국어'키워드를 더 집중하여 어학으로 분류한 것으로 추정
+
+
+## 4. 모델 가중치 저장 위치
+- 최종 파인튜닝된 모델 가중치: Hugging Face를 통해 재현 가능 
+- 공개 저장소에 업로드 (별도의 인증 없이 다운로드 가능)
+- Hugging Face Link: jsjang0104/book-genre-classifier-bert
+
+## 5. 특이사항 및 한계
+- 다국어 처리의 어려움
+    - 도메인-언어 불일치: input sequence는 독일어, 영어, 한국어, 라틴어 등이 섞여 있음으나 output sequence는 독일어 고정 (mBERT 사용에도 불구하고 타 언어로의 매핑 과정에서 혼란 발생)
+    - 예시: '한국외국어대학교 70년사'는 '70년사'에서 '역사'의 의미를 지니지만, mBERT가 '외국어'를 '어학'와 강하게 연결시켜 오분류
+
+- 어학 (Sprachwissenschaft) 클래스의 Recall 저조: 
+    - Weighted Loss를 사용했음에도 불구하고, minority class인 어학 관련 도서가 문학 또는 역사로 잘못 예측되는 경우가 많았음
+    - 이는 어학 자료가 문학 작품 해설이나 언어 변천사 연구 등 다른 인문학 분야와 제목 키워드를 공유하는 경우가 많음으로 추정
+    
+- 향후 개선 방향
+    - 데이터 증강: 어학 클래스에 대한 추가 데이터를 수집하여 모델의 불균형 문제 해소
+    - 더 깊은 모델: mBERT보다 도메인 지식을 더 잘 이해하는 German BERT등의 모델을 사용하고, 독일어 외 언어는 번역 후 처리하는 방식 고려 가능
