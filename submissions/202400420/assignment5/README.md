@@ -54,7 +54,7 @@ submissions/202400420/assignment5/
 ## 3. 평가 지표 및 성능 결과:
 
 ### 1. training.ipynb 학습 경과 분석
-![Loss Curve](./datas/loss_accuracy.png)
+![Loss Accuracy_Curve](submissions/202400420/assignment5/datas/loss_accuracy.png)
 
 1. Loss
 - Train Loss
