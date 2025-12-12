@@ -20,7 +20,7 @@
 submissions/202400420/assignment5/  
 ├── datas/  
 |   ├── eval_data.csv                   # evaluation dataset (assignment4 수집 데이터 분할)  
-|   ├── inference_data.csv              # inference dataset (실제 도서관 도서, 편의를 위해 골드라벨을 포함하고 있음. (코드 내부에서는 'title' column만 사용해서 영향 없음))
+|   ├── inference_data.csv              # inference dataset (실제 도서관 도서, 편의를 위해 골드라벨을 포함하고 있음. (코드 내부에서는 'title' column만 사용해서 영향 없음))  
 |   ├── inference_result.csv            # inference 결과 (inference.ipynb 코드에서 저장)   
 |   ├── nomalized_confusion_matrix.png  # confusion matrix 이미지   
 |   ├── test_data.csv                   # test dataset (assignment4 수집 데이터 분할)  
